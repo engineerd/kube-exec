@@ -5,13 +5,16 @@ import (
 	"io"
 	"log"
 	"net/url"
+	"time"
 
 	"github.com/Azure/go-autorest/autorest/to"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/kubernetes/scheme"
 	restclient "k8s.io/client-go/rest"
+	"k8s.io/client-go/tools/cache"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/remotecommand"
 )
@@ -141,4 +144,38 @@ func execute(method string, url *url.URL, config *restclient.Config, stdout, std
 		Stderr: stderr,
 		Tty:    tty,
 	})
+}
+
+func watchPod(kubeconfig string, pod *v1.Pod) {
+	clientset, _, err := getKubeClient(kubeconfig)
+	if err != nil {
+		log.Fatalf("cannot get clientset: %v", err)
+	}
+
+	stop := make(chan struct{})
+
+	watchlist := cache.NewListWatchFromClient(clientset.CoreV1().RESTClient(), "pods", pod.Namespace, fields.Everything())
+	_, controller := cache.NewInformer(watchlist, &v1.Pod{}, time.Second*1, cache.ResourceEventHandlerFuncs{
+		UpdateFunc: func(o, n interface{}) {
+			newPod := n.(*v1.Pod)
+
+			// not the pod we created
+			if newPod.Name != pod.Name {
+				return
+			}
+
+			if newPod.Status.Phase == v1.PodRunning {
+				//stop <- struct{}{}
+				close(stop)
+				return
+			}
+
+			// pod is not running
+			fmt.Printf("pod: %v, status: %v\n\n", newPod.Name, newPod.Status.Phase)
+
+		},
+	})
+
+	// TODO - add stop channel here
+	controller.Run(stop)
 }
