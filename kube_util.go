@@ -62,6 +62,9 @@ func createPod(kubeconfig, namespace, name, image string, command, args []string
 		Spec: v1.PodSpec{
 			Containers: []v1.Container{
 				{
+					TTY:   true,
+					Stdin: true,
+
 					Name:    name,
 					Image:   image,
 					Command: command,
@@ -101,7 +104,7 @@ func containerToAttachTo(container string, pod *v1.Pod) (*v1.Container, error) {
 }
 
 // attach attaches to a given pod, outputting to stdout and stderr
-func attach(kubeconfig string, pod *v1.Pod, stdout, stderr io.Writer) error {
+func attach(kubeconfig string, pod *v1.Pod, stdin io.Reader, stdout, stderr io.Writer) error {
 	clientset, config, err := getKubeClient(kubeconfig)
 	if err != nil {
 		log.Fatalf("cannot get clientset: %v", err)
@@ -120,13 +123,13 @@ func attach(kubeconfig string, pod *v1.Pod, stdout, stderr io.Writer) error {
 
 	req.VersionedParams(&v1.PodAttachOptions{
 		Container: container.Name,
-		Stdin:     false,
+		Stdin:     true,
 		Stdout:    true,
 		Stderr:    true,
 		TTY:       false,
 	}, scheme.ParameterCodec)
 
-	err = execute("POST", req.URL(), config, stdout, stderr, false)
+	err = startStream("POST", req.URL(), config, stdin, stdout, stderr, false)
 	if err != nil {
 		return fmt.Errorf("error executing: %v", err)
 	}
@@ -134,18 +137,20 @@ func attach(kubeconfig string, pod *v1.Pod, stdout, stderr io.Writer) error {
 	return nil
 }
 
-func execute(method string, url *url.URL, config *restclient.Config, stdout, stderr io.Writer, tty bool) error {
+func startStream(method string, url *url.URL, config *restclient.Config, stdin io.Reader, stdout, stderr io.Writer, tty bool) error {
 	exec, err := remotecommand.NewSPDYExecutor(config, method, url)
 	if err != nil {
 		return err
 	}
 	return exec.Stream(remotecommand.StreamOptions{
+		Stdin:  stdin,
 		Stdout: stdout,
 		Stderr: stderr,
 		Tty:    tty,
 	})
 }
 
+// watchPod waits until the created pod is in running state
 func watchPod(kubeconfig string, pod *v1.Pod) {
 	clientset, _, err := getKubeClient(kubeconfig)
 	if err != nil {
@@ -164,18 +169,13 @@ func watchPod(kubeconfig string, pod *v1.Pod) {
 				return
 			}
 
+			// if the pod is running, stop watching and continue with the cmd execution
 			if newPod.Status.Phase == v1.PodRunning {
-				//stop <- struct{}{}
 				close(stop)
 				return
 			}
-
-			// pod is not running
-			fmt.Printf("pod: %v, status: %v\n\n", newPod.Name, newPod.Status.Phase)
-
 		},
 	})
 
-	// TODO - add stop channel here
 	controller.Run(stop)
 }
