@@ -4,6 +4,11 @@
 
 [[constraint]]
   branch = "release-1.8"
+  name = "k8s.io/apiserver"
+
+
+[[constraint]]
+  branch = "release-1.8"
   name = "k8s.io/apimachinery"
 
 [[constraint]]
