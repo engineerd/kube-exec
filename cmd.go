@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	batch "k8s.io/api/batch/v1"
+	v1 "k8s.io/api/core/v1"
 )
 
 // KubeConfig contains all Kubernetes configuration
@@ -22,23 +22,25 @@ type Cmd struct {
 	Env  []string
 	Dir  string
 
-	Cfg     KubeConfig
-	kubeJob *batch.Job
+	Cfg KubeConfig
+	pod *v1.Pod
 
 	Stdin  io.Reader
 	Stdout io.Writer
 	Stderr io.Writer
 }
 
-// Run starts the specified command and waits for it to complete.
-func (cmd *Cmd) Run() error {
+// Start starts the specified command but does not wait for it to complete.
+func (cmd *Cmd) Start() error {
 
 	pod, err := createPod(cmd.Cfg.Kubeconfig, cmd.Cfg.Namespace, cmd.Cfg.Name, cmd.Cfg.Image, []string{cmd.Path}, cmd.Args)
 	if err != nil {
 		return fmt.Errorf("cannot create pod: %v", err)
 	}
 
-	fmt.Printf("created pod: %v", pod.Name)
+	cmd.pod = pod
+	fmt.Printf("created pod: %v\n", pod.Name)
+	fmt.Printf("To wait the execution, use cmd.Wait() / cmd.Run(). To see the logs, use kubectl logs %v\n", pod.Name)
 
 	return nil
 }

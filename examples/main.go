@@ -14,12 +14,12 @@ func main() {
 	cfg := kube.KubeConfig{
 		Kubeconfig: kubeconfig,
 		Image:      "ubuntu",
-		Name:       "kube-testing123",
+		Name:       "kube-exec",
 		Namespace:  "default",
 	}
 
 	cmd := kube.Command(cfg, "echo", "Hello, Universe!")
-	err := cmd.Run()
+	err := cmd.Start()
 	if err != nil {
 		fmt.Printf("%v", err)
 	}
