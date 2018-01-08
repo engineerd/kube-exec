@@ -55,14 +55,15 @@ func (cmd *Cmd) Start() error {
 		cmd.Stdout = ioutil.Discard
 	}
 
-	// pod, err := createPod(cmd.Cfg.Kubeconfig, cmd.Cfg.Namespace, cmd.Cfg.Name, cmd.Cfg.Image, []string{cmd.Path}, cmd.Args)
-	// if err != nil {
-	// 	return fmt.Errorf("cannot create pod: %v", err)
-	// }
+	pod, err := createPod(cmd.Cfg.Kubeconfig, cmd.Cfg.Namespace, cmd.Cfg.Name, cmd.Cfg.Image, []string{cmd.Path}, cmd.Args)
+	if err != nil {
+		return fmt.Errorf("cannot create pod: %v", err)
+	}
 
-	cmd.pod, _ = getPod(cmd.Cfg.Kubeconfig, cmd.Cfg.Namespace, cmd.Cfg.Name)
-	// fmt.Printf("created pod: %v\n", pod.Name)
-	// fmt.Printf("To wait the execution, use cmd.Wait() / cmd.Run(). To see the logs, use kubectl logs %v\n", pod.Name)
+	cmd.pod = pod
+
+	fmt.Printf("created pod: %v\n", pod.Name)
+	fmt.Printf("To wait the execution, use cmd.Wait() / cmd.Run(). To see the logs, use kubectl logs %v\n", pod.Name)
 
 	return nil
 }
@@ -73,9 +74,14 @@ func (cmd *Cmd) Start() error {
 // The command must have been started by Start.
 func (cmd *Cmd) Wait() error {
 
-	err := attach(cmd.Cfg.Kubeconfig, cmd.pod, cmd.Stdout, cmd.Stderr)
+	// wait for pod to be running
+	fmt.Printf("waiting for pod to be running\n")
+	watchPod(cmd.Cfg.Kubeconfig, cmd.pod)
+
+	err := attach(cmd.Cfg.Kubeconfig, cmd.pod, cmd.Stdin, cmd.Stdout, cmd.Stderr)
 	if err != nil {
 		return fmt.Errorf("cannot attach: %v", err)
 	}
+
 	return nil
 }
