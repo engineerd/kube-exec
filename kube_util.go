@@ -62,7 +62,7 @@ func createPod(kubeconfig, namespace, name, image string, command, args []string
 		Spec: v1.PodSpec{
 			Containers: []v1.Container{
 				{
-					TTY:   true,
+					TTY:   false,
 					Stdin: true,
 
 					Name:    name,
