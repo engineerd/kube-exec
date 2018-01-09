@@ -8,12 +8,10 @@ import (
 	kube "github.com/radu-matei/kube-exec"
 )
 
-var kubeconfig = os.Getenv("KUBECONFIG")
-
 func main() {
 
 	cfg := kube.Config{
-		Kubeconfig: kubeconfig,
+		Kubeconfig: os.Getenv("KUBECONFIG"),
 		Image:      "ubuntu",
 		Name:       "kube-attach",
 		Namespace:  "default",
@@ -31,6 +29,7 @@ func main() {
 		log.Fatalf("cannot get pipe to stdin: %v", err)
 	}
 
+	// write in cmd.Stdin
 	go func() {
 		defer w.Close()
 		_, err = io.Copy(w, os.Stdin)
@@ -41,6 +40,7 @@ func main() {
 
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
+
 	err = cmd.Wait()
 	if err != nil {
 		log.Fatalf("cannot wait command: %v", err)
