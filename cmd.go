@@ -85,3 +85,14 @@ func (cmd *Cmd) Wait() error {
 
 	return nil
 }
+
+// StdinPipe returns a pipe that will be connected to the command's standard input
+// when the command starts.
+//
+// Different than os/exec.StdinPipe, returned io.WriteCloser should be closed by user.
+func (cmd *Cmd) StdinPipe() (io.WriteCloser, error) {
+
+	pr, pw := io.Pipe()
+	cmd.Stdin = pr
+	return pw, nil
+}
