@@ -43,18 +43,6 @@ func Command(cfg Config, name string, arg ...string) *Cmd {
 
 // Start starts the specified command but does not wait for it to complete.
 func (cmd *Cmd) Start() error {
-	if cmd.Stdin == nil {
-		cmd.Stdin = ioutil.NopCloser(nil)
-	}
-
-	if cmd.Stdout == nil {
-		cmd.Stdout = ioutil.Discard
-	}
-
-	if cmd.Stderr == nil {
-		cmd.Stdout = ioutil.Discard
-	}
-
 	pod, err := createPod(cmd.Cfg.Kubeconfig, cmd.Cfg.Namespace, cmd.Cfg.Name, cmd.Cfg.Image, []string{cmd.Path}, cmd.Args)
 	if err != nil {
 		return fmt.Errorf("cannot create pod: %v", err)
@@ -73,12 +61,31 @@ func (cmd *Cmd) Start() error {
 //
 // The command must have been started by Start.
 func (cmd *Cmd) Wait() error {
+	if cmd.Stdin == nil {
+		cmd.Stdin = ioutil.NopCloser(nil)
+	}
+
+	if cmd.Stdout == nil {
+		cmd.Stdout = ioutil.Discard
+	}
+
+	if cmd.Stderr == nil {
+		cmd.Stderr = ioutil.Discard
+	}
 
 	// wait for pod to be running
 	fmt.Printf("waiting for pod to be running\n")
 	watchPod(cmd.Cfg.Kubeconfig, cmd.pod)
 
-	err := attach(cmd.Cfg.Kubeconfig, cmd.pod, cmd.Stdin, cmd.Stdout, cmd.Stderr)
+	attachOptions := &v1.PodAttachOptions{
+		Stdin:  cmd.Stdin != ioutil.NopCloser(nil),
+		Stdout: cmd.Stdout != ioutil.Discard,
+		//Stderr: cmd.Stderr != ioutil.Discard,
+		Stderr: true,
+		TTY:    false,
+	}
+
+	err := attach(cmd.Cfg.Kubeconfig, cmd.pod, attachOptions, cmd.Stdin, cmd.Stdout, cmd.Stderr)
 	if err != nil {
 		return fmt.Errorf("cannot attach: %v", err)
 	}
