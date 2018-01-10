@@ -174,9 +174,6 @@ func watchPod(kubeconfig string, pod *v1.Pod) {
 }
 
 func getStreamOptions(attachOptions *v1.PodAttachOptions, stdin io.Reader, stdout, stderr io.Writer) remotecommand.StreamOptions {
-
-	fmt.Printf("attach options: %v", attachOptions)
-
 	var streamOptions remotecommand.StreamOptions
 	if attachOptions.Stdin {
 		streamOptions.Stdin = stdin
@@ -190,6 +187,5 @@ func getStreamOptions(attachOptions *v1.PodAttachOptions, stdin io.Reader, stdou
 		streamOptions.Stderr = stderr
 	}
 
-	fmt.Printf("stream options: %v", streamOptions)
 	return streamOptions
 }
