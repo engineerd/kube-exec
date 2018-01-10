@@ -104,7 +104,7 @@ func containerToAttachTo(container string, pod *v1.Pod) (*v1.Container, error) {
 }
 
 // attach attaches to a given pod, outputting to stdout and stderr
-func attach(kubeconfig string, pod *v1.Pod, stdin io.Reader, stdout, stderr io.Writer) error {
+func attach(kubeconfig string, pod *v1.Pod, attachOptions *v1.PodAttachOptions, stdin io.Reader, stdout, stderr io.Writer) error {
 	clientset, config, err := getKubeClient(kubeconfig)
 	if err != nil {
 		log.Fatalf("cannot get clientset: %v", err)
@@ -121,15 +121,12 @@ func attach(kubeconfig string, pod *v1.Pod, stdin io.Reader, stdout, stderr io.W
 		Namespace(pod.Namespace).
 		SubResource("attach")
 
-	req.VersionedParams(&v1.PodAttachOptions{
-		Container: container.Name,
-		Stdin:     true,
-		Stdout:    true,
-		Stderr:    true,
-		TTY:       false,
-	}, scheme.ParameterCodec)
+	attachOptions.Container = container.Name
+	req.VersionedParams(attachOptions, scheme.ParameterCodec)
 
-	err = startStream("POST", req.URL(), config, stdin, stdout, stderr, false)
+	streamOptions := getStreamOptions(attachOptions, stdin, stdout, stderr)
+
+	err = startStream("POST", req.URL(), config, streamOptions)
 	if err != nil {
 		return fmt.Errorf("error executing: %v", err)
 	}
@@ -137,17 +134,13 @@ func attach(kubeconfig string, pod *v1.Pod, stdin io.Reader, stdout, stderr io.W
 	return nil
 }
 
-func startStream(method string, url *url.URL, config *restclient.Config, stdin io.Reader, stdout, stderr io.Writer, tty bool) error {
+func startStream(method string, url *url.URL, config *restclient.Config, streamOptions remotecommand.StreamOptions) error {
 	exec, err := remotecommand.NewSPDYExecutor(config, method, url)
 	if err != nil {
 		return err
 	}
-	return exec.Stream(remotecommand.StreamOptions{
-		Stdin:  stdin,
-		Stdout: stdout,
-		Stderr: stderr,
-		Tty:    tty,
-	})
+
+	return exec.Stream(streamOptions)
 }
 
 // watchPod waits until the created pod is in running state
@@ -178,4 +171,25 @@ func watchPod(kubeconfig string, pod *v1.Pod) {
 	})
 
 	controller.Run(stop)
+}
+
+func getStreamOptions(attachOptions *v1.PodAttachOptions, stdin io.Reader, stdout, stderr io.Writer) remotecommand.StreamOptions {
+
+	fmt.Printf("attach options: %v", attachOptions)
+
+	var streamOptions remotecommand.StreamOptions
+	if attachOptions.Stdin {
+		streamOptions.Stdin = stdin
+	}
+
+	if attachOptions.Stdout {
+		streamOptions.Stdout = stdout
+	}
+
+	if attachOptions.Stderr {
+		streamOptions.Stderr = stderr
+	}
+
+	fmt.Printf("stream options: %v", streamOptions)
+	return streamOptions
 }
