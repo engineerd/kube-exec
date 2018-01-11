@@ -37,8 +37,8 @@ if err != nil {
 
 Here's a list of full examples you can find in this repo:
 
-- [simple hello example](/examples/hello)
-- [pass `stdin` to the pod](/examples/stdin)
+- [simple hello example](/examples/hello/main.go)
+- [pass `stdin` to the pod](/examples/stdin/main.go)
 
 
 [1]: https://golang.org/pkg/os/exec
