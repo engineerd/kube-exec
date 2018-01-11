@@ -17,12 +17,7 @@ func main() {
 		Namespace:  "default",
 	}
 
-	cmd := kube.Command(cfg, "/bin/sh", "-c", "while true; read test; do echo hello; echo $test; sleep .5; done")
-	//cmd := kube.Command(cfg, "/bin/sh", "-c", "while true; do echo hello; sleep .5; done")
-	err := cmd.Start()
-	if err != nil {
-		log.Fatalf("cannot start command: %v", err)
-	}
+	cmd := kube.Command(cfg, "/bin/sh", "-c", "while true; read test; do echo You said: $test; sleep .5; done")
 
 	w, err := cmd.StdinPipe()
 	if err != nil {
@@ -39,11 +34,10 @@ func main() {
 	}()
 
 	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
 
-	err = cmd.Wait()
+	err = cmd.Run()
 	if err != nil {
-		log.Fatalf("cannot wait command: %v", err)
+		log.Fatalf("error: %v", err)
 	}
 
 }

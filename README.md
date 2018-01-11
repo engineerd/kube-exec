@@ -23,7 +23,7 @@ cfg := kube.Config{
 }
 
 // also sleeping for a couple of seconds
-// if the pod completes too fast, we don't have time to attach to it
+// if the pod completes too fast, we don't have time to catch the Running state event
 
 cmd := kube.Command(cfg, "/bin/sh", "-c", "sleep 2; echo Running from Kubernetes pod;")
 cmd.Stdout = os.Stdout
@@ -46,3 +46,9 @@ Here's a list of full examples you can find in this repo:
 [3]: https://twitter.com/ahmetb
 
 [4]: /examples/main.go
+
+
+Disclaimer
+----------
+
+This is not an official Microsoft project.
