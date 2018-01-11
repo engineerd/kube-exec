@@ -11,12 +11,10 @@ The interface of the package is similar to `os/exec`, and essentially this:
 - attaches to the pod and allows you to stream data to the pod through `stdin`, and from the pod back to the program through `stdout` and `stderr`
 
 
-
 How to use it
 -------------
 
 ```go
-// pass kubeconfig, set container image
 cfg := kube.Config{
 	Kubeconfig: os.Getenv("KUBECONFIG"),
 	Image:      "ubuntu",
@@ -24,22 +22,15 @@ cfg := kube.Config{
 	Namespace:  "default",
 }
 
-// set the command to run inside the pod
-cmd := kube.Command(cfg, "/bin/sh", "-c", "sleep 1; echo Running from Kubernetes pod;")
+// also sleeping for a couple of seconds
+// if the pod completes too fast, we don't have time to attach to it
 
-// deploy pod
-err := cmd.Start()
-if err != nil {
-	log.Fatalf("cannot start command: %v", err)
-}
-
-// set stdout
+cmd := kube.Command(cfg, "/bin/sh", "-c", "sleep 2; echo Running from Kubernetes pod;")
 cmd.Stdout = os.Stdout
 
-// wait for pod to be in running state and attach
-err = cmd.Wait()
+err := cmd.Run()
 if err != nil {
-	log.Fatalf("cannot wait command: %v", err)
+	log.Fatalf("error: %v", err)
 }
 ```
 

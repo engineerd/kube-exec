@@ -50,9 +50,6 @@ func (cmd *Cmd) Start() error {
 
 	cmd.pod = pod
 
-	fmt.Printf("created pod: %v\n", pod.Name)
-	fmt.Printf("To wait the execution, use cmd.Wait() / cmd.Run(). To see the logs, use kubectl logs %v\n", pod.Name)
-
 	return nil
 }
 
@@ -74,7 +71,6 @@ func (cmd *Cmd) Wait() error {
 	}
 
 	// wait for pod to be running
-	fmt.Printf("waiting for pod to be running\n")
 	watchPod(cmd.Cfg.Kubeconfig, cmd.pod)
 
 	attachOptions := &v1.PodAttachOptions{
@@ -91,6 +87,16 @@ func (cmd *Cmd) Wait() error {
 	}
 
 	return nil
+}
+
+// Run starts the specified command and waits for it to complete.
+func (cmd *Cmd) Run() error {
+	err := cmd.Start()
+	if err != nil {
+		return fmt.Errorf("cannot start command: %v", err)
+	}
+
+	return cmd.Wait()
 }
 
 // StdinPipe returns a pipe that will be connected to the command's standard input

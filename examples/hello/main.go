@@ -16,15 +16,15 @@ func main() {
 		Namespace:  "default",
 	}
 
-	cmd := kube.Command(cfg, "/bin/sh", "-c", "sleep 1; echo Running from Kubernetes pod;")
-	err := cmd.Start()
+	// also sleeping for a couple of seconds
+	// if the pod completes too fast, we don't have time to attach to it
+
+	cmd := kube.Command(cfg, "/bin/sh", "-c", "sleep 2; echo Running from Kubernetes pod;")
+	cmd.Stdout = os.Stdout
+
+	err := cmd.Run()
 	if err != nil {
-		log.Fatalf("cannot start command: %v", err)
+		log.Fatalf("error: %v", err)
 	}
 
-	cmd.Stdout = os.Stdout
-	err = cmd.Wait()
-	if err != nil {
-		log.Fatalf("cannot wait command: %v", err)
-	}
 }
