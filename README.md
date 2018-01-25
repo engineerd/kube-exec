@@ -22,9 +22,6 @@ cfg := kube.Config{
 	Namespace:  "default",
 }
 
-// also sleeping for a couple of seconds
-// if the pod completes too fast, we don't have time to catch the Running state event
-
 cmd := kube.Command(cfg, "/bin/sh", "-c", "sleep 2; echo Running from Kubernetes pod;")
 cmd.Stdout = os.Stdout
 
