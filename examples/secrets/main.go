@@ -23,7 +23,7 @@ func main() {
 		},
 	}
 
-	cmd := kube.Command(cfg, "/bin/sh", "-c", "sleep 2; echo abc $SUPERPRIVATESECRET;")
+	cmd := kube.Command(cfg, "/bin/sh", "-c", "sleep 2; echo Your private secret: $SUPERPRIVATESECRET;")
 	cmd.Stdout = os.Stdout
 
 	err := cmd.Run()

@@ -1,7 +1,7 @@
 kube-exec
 =========
 
-![CircleCI](https://circleci.com/gh/radu-matei/kube-exec/tree/master.svg?style=shield&circle-token=13a8324e6b860dc9158a67d0102920047b5c1144)
+[![CircleCI](https://circleci.com/gh/radu-matei/kube-exec/tree/master.svg?style=shield&circle-token=13a8324e6b860dc9158a67d0102920047b5c1144)](https://circleci.com/gh/radu-matei/kube-exec)
 [![Go Report Card](https://goreportcard.com/badge/github.com/radu-matei/kube-exec)](https://goreportcard.com/report/github.com/radu-matei/kube-exec)
 [![Documentation](https://godoc.org/github.com/radu-matei/kube-exec?status.svg)](https://godoc.org/github.com/radu-matei/kube-exec)
 
