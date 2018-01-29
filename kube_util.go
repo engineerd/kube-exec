@@ -47,17 +47,34 @@ func getPod(kubeconfig, namespace, name string) (*v1.Pod, error) {
 }
 
 // createPod creates a new pod within a namespaces, with specified image and command to run
-func createPod(kubeconfig, namespace, name, image string, command, args []string) (*v1.Pod, error) {
-	clientset, _, err := getKubeClient(kubeconfig)
+func createPod(cfg Config, command, args []string) (*v1.Pod, error) {
+	clientset, _, err := getKubeClient(cfg.Kubeconfig)
 	if err != nil {
 		log.Fatalf("cannot get clientset: %v", err)
 	}
 
-	podsClient := clientset.CoreV1().Pods(namespace)
+	// convert to Kubernetes API env var from secret
+	// TODO - make this part generic and add volume mount secret support
+	env := []v1.EnvVar{}
+	for _, s := range cfg.Secrets {
+		env = append(env, v1.EnvVar{
+			Name: s.EnvVarName,
+			ValueFrom: &v1.EnvVarSource{
+				SecretKeyRef: &v1.SecretKeySelector{
+					LocalObjectReference: v1.LocalObjectReference{
+						Name: s.SecretName,
+					},
+					Key: s.SecretKey,
+				},
+			},
+		})
+	}
+
+	podsClient := clientset.CoreV1().Pods(cfg.Namespace)
 	return podsClient.Create(&v1.Pod{
 
 		ObjectMeta: metav1.ObjectMeta{
-			Name: name,
+			Name: cfg.Name,
 		},
 		Spec: v1.PodSpec{
 			Containers: []v1.Container{
@@ -65,15 +82,15 @@ func createPod(kubeconfig, namespace, name, image string, command, args []string
 					TTY:   false,
 					Stdin: true,
 
-					Name:    name,
-					Image:   image,
+					Name:    cfg.Name,
+					Image:   cfg.Image,
 					Command: command,
 					Args:    args,
 					SecurityContext: &v1.SecurityContext{
 						Privileged: to.BoolPtr(false),
 					},
 					ImagePullPolicy: v1.PullPolicy(v1.PullAlways),
-					Env:             []v1.EnvVar{},
+					Env:             env,
 					VolumeMounts:    []v1.VolumeMount{},
 				},
 			},

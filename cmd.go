@@ -14,14 +14,23 @@ type Config struct {
 	Namespace  string
 	Name       string
 	Image      string
+
+	Secrets []Secret
+}
+
+// Secret represents a Kubernetes secret to pass into the pod as env variable
+type Secret struct {
+	EnvVarName string
+	SecretName string
+	SecretKey  string
 }
 
 // Cmd represents the command to execute inside the pod
 type Cmd struct {
 	Path string
 	Args []string
-	Env  []string
-	Dir  string
+	//Env  []string
+	Dir string
 
 	Cfg Config
 	pod *v1.Pod
@@ -43,7 +52,7 @@ func Command(cfg Config, name string, arg ...string) *Cmd {
 
 // Start starts the specified command but does not wait for it to complete.
 func (cmd *Cmd) Start() error {
-	pod, err := createPod(cmd.Cfg.Kubeconfig, cmd.Cfg.Namespace, cmd.Cfg.Name, cmd.Cfg.Image, []string{cmd.Path}, cmd.Args)
+	pod, err := createPod(cmd.Cfg, []string{cmd.Path}, cmd.Args)
 	if err != nil {
 		return fmt.Errorf("cannot create pod: %v", err)
 	}
