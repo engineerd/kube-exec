@@ -1,6 +1,10 @@
 kube-exec
 =========
 
+![CircleCI](https://circleci.com/gh/radu-matei/kube-exec/tree/master.svg?style=shield&circle-token=13a8324e6b860dc9158a67d0102920047b5c1144)
+[![Go Report Card](https://goreportcard.com/badge/github.com/radu-matei/kube-exec)](https://goreportcard.com/report/github.com/radu-matei/kube-exec)
+[![Documentation](https://godoc.org/github.com/radu-matei/kube-exec?status.svg)](https://godoc.org/github.com/radu-matei/kube-exec)
+
 `kube-exec` is a library similar to [`os/exec`][1] that allows you to run commands in a Kubernetes pod, as if that command was executed locally.
 > It is inspired from [`go-dexec`][2] by [ahmetb][3], which does the same thing, but for a Docker engine.
 
@@ -36,6 +40,7 @@ Here's a list of full examples you can find in this repo:
 
 - [simple hello example](/examples/hello/main.go)
 - [pass `stdin` to the pod](/examples/stdin/main.go)
+- [pass Kubernetes secrets as environment variables](/examples/secrets/main.go)
 
 
 [1]: https://golang.org/pkg/os/exec
