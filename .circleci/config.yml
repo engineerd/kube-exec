@@ -1,0 +1,14 @@
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version
+      - image: circleci/golang:1.10-rc-stretch
+
+    working_directory: /go/src/github.com/radu-matei/kube-exec
+    steps:
+      - checkout
+
+      - run: make dep
+      - run: make build
+      - run: make examples
