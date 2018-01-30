@@ -160,8 +160,8 @@ func startStream(method string, url *url.URL, config *restclient.Config, streamO
 	return exec.Stream(streamOptions)
 }
 
-// watchPod waits until the created pod is in running state
-func watchPod(kubeconfig string, pod *v1.Pod) {
+// waitPod waits until the created pod is in running state
+func waitPod(kubeconfig string, pod *v1.Pod) {
 	clientset, _, err := getKubeClient(kubeconfig)
 	if err != nil {
 		log.Fatalf("cannot get clientset: %v", err)

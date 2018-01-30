@@ -80,12 +80,15 @@ func (cmd *Cmd) Wait() error {
 	}
 
 	// wait for pod to be running
-	watchPod(cmd.Cfg.Kubeconfig, cmd.pod)
+	waitPod(cmd.Cfg.Kubeconfig, cmd.pod)
 
 	attachOptions := &v1.PodAttachOptions{
 		Stdin:  cmd.Stdin != ioutil.NopCloser(nil),
 		Stdout: cmd.Stdout != ioutil.Discard,
+
+		// For k8s 1.9 - see https://github.com/kubernetes/kubernetes/pull/52686
 		//Stderr: cmd.Stderr != ioutil.Discard,
+
 		Stderr: true,
 		TTY:    false,
 	}
