@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net/url"
+	"sync"
 	"time"
 
 	"github.com/Azure/go-autorest/autorest/to"
@@ -167,7 +168,7 @@ func waitPod(kubeconfig string, pod *v1.Pod) {
 		log.Fatalf("cannot get clientset: %v", err)
 	}
 
-	stop := make(chan struct{})
+	stop := newStopChan()
 
 	watchlist := cache.NewListWatchFromClient(clientset.CoreV1().RESTClient(), "pods", pod.Namespace, fields.Everything())
 	_, controller := cache.NewInformer(watchlist, &v1.Pod{}, time.Second*1, cache.ResourceEventHandlerFuncs{
@@ -181,13 +182,13 @@ func waitPod(kubeconfig string, pod *v1.Pod) {
 
 			// if the pod is running, stop watching and continue with the cmd execution
 			if newPod.Status.Phase == v1.PodRunning {
-				close(stop)
+				stop.closeOnce()
 				return
 			}
 		},
 	})
 
-	controller.Run(stop)
+	controller.Run(stop.c)
 }
 
 func getStreamOptions(attachOptions *v1.PodAttachOptions, stdin io.Reader, stdout, stderr io.Writer) remotecommand.StreamOptions {
@@ -205,4 +206,19 @@ func getStreamOptions(attachOptions *v1.PodAttachOptions, stdin io.Reader, stdou
 	}
 
 	return streamOptions
+}
+
+type stopChan struct {
+	c chan struct{}
+	sync.Once
+}
+
+func newStopChan() *stopChan {
+	return &stopChan{c: make(chan struct{})}
+}
+
+func (s *stopChan) closeOnce() {
+	s.Do(func() {
+		close(s.c)
+	})
 }
