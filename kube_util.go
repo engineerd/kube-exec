@@ -8,7 +8,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Azure/go-autorest/autorest/to"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
@@ -88,7 +87,7 @@ func createPod(cfg Config, command, args []string) (*v1.Pod, error) {
 					Command: command,
 					Args:    args,
 					SecurityContext: &v1.SecurityContext{
-						Privileged: to.BoolPtr(false),
+						Privileged: boolPtr(false),
 					},
 					ImagePullPolicy: v1.PullPolicy(v1.PullAlways),
 					Env:             env,
@@ -221,4 +220,9 @@ func (s *stopChan) closeOnce() {
 	s.Do(func() {
 		close(s.c)
 	})
+}
+
+// boolPtr returns a pointer to the passed bool.
+func boolPtr(b bool) *bool {
+	return &b
 }
