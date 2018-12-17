@@ -3,7 +3,7 @@ SUBDIRS := $(wildcard examples/*)
 
 .PHONY: dep
 dep:
-	go get -u github.com/golang/dep/... && \
+	go get -u github.com/golang/dep/cmd/dep && \
 	dep ensure
 
 .PHONY: build
