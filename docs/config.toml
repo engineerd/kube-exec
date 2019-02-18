@@ -1,16 +1,15 @@
+baseurl = "https://example.org/"
 languageCode = "en-us"
 title = "kube-exec"
 theme = "hugo-material-docs"
 metadataformat = "yaml"
 canonifyurls = true
-
 # Enable Google Analytics by entering your tracking id
-# googleAnalytics = ""
+googleAnalytics = ""
 
 [params]
 	# General information
 	author = "Engineerd"
-
 	description = "Lightweight Golang package for executing commands in remote Kubernetes pods"
 	copyright = "Released under the MIT license"
 
@@ -18,12 +17,7 @@ canonifyurls = true
 	provider = "GitHub"
 	repo_url = "https://github.com/engineerd/kube-exec"
 
-	#version = "1.0.0"
-	#logo = "images/logo.png"
-	favicon = ""
-
-	# Syntax highlighting theme
-	highlight_css  = ""
+	permalink = "#"
 
 	[params.palette]
     	primary = "blue-grey"
@@ -33,21 +27,20 @@ canonifyurls = true
     	text = "Ubuntu"
     	code = "Ubuntu Mono"
 
-
 [social]
 	twitter = ""
 	github  = "engineerd"
 
-
 [[menu.main]]
 	name   = "Introduction"
-	url    = "/introduction"
+	url    = "introduction/"
 	weight = 1
 
 [[menu.main]]
 	name   = "Examples"
-	url    = "/examples"
-	weight = 3
+	url    = "examples/"
+	weight = 2
+
 
 [blackfriday]
 	smartypants	= true

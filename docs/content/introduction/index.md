@@ -1,6 +1,7 @@
 ---
 date: 2019-02-18
 title: Introduction
+type: index
 ---
 
 ## What is `kube-exec`?
@@ -42,13 +43,11 @@ if err != nil {
 
 Here's a list of full examples you can find in this repo:
 
-- [simple hello example](/examples/hello/main.go)
-- [pass `stdin` to the pod](/examples/stdin/main.go)
-- [pass Kubernetes secrets as environment variables](/examples/secrets/main.go)
+- [simple hello example](/examples/#the-simplest-example)
+- [pass `stdin` to the pod](/examples/#passing-stdin-to-the-pod)
+- [pass Kubernetes secrets as environment variables](/examples/#passing-secrets-to-the-pod)
 
 
 [1]: https://golang.org/pkg/os/exec
 [2]: https://github.com/ahmetb/go-dexec
 [3]: https://twitter.com/ahmetb
-
-[4]: /examples/main.go
