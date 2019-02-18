@@ -1,4 +1,4 @@
-baseurl = "https://example.org/"
+baseurl = "https://engineerd.github.io/kube-exec/"
 languageCode = "en-us"
 title = "kube-exec"
 theme = "hugo-material-docs"
