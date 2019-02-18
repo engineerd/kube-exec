@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>kube-exec</title>
+    <meta name="generator" content="Hugo 0.54.0" />
+
+    
+    <meta name="description" content="Lightweight Golang package for executing commands in remote Kubernetes pods">
+    
+    <link rel="canonical" href="https://example.org/">
+    
+    <meta name="author" content="Engineerd">
+    
+
+    <meta property="og:url" content="https://example.org/">
+    <meta property="og:title" content="kube-exec">
+    
+    <meta name="apple-mobile-web-app-title" content="kube-exec">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://example.org/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="https://example.org/images/favicon.ico">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('https://example.org/fonts/icon.eot');
+        src: url('https://example.org/fonts/icon.eot')
+               format('embedded-opentype'),
+             url('https://example.org/fonts/icon.woff')
+               format('woff'),
+             url('https://example.org/fonts/icon.ttf')
+               format('truetype'),
+             url('https://example.org/fonts/icon.svg')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="https://example.org/stylesheets/application.css">
+    <link rel="stylesheet" href="https://example.org/stylesheets/temporary.css">
+    <link rel="stylesheet" href="https://example.org/stylesheets/palettes.css">
+    <link rel="stylesheet" href="https://example.org/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="https://example.org/javascripts/modernizr.js"></script>
+
+    
+    <link href="https://example.org/index.xml" rel="alternate" type="application/rss+xml" title="kube-exec" />
+    <link href="https://example.org/index.xml" rel="feed" type="application/rss+xml" title="kube-exec" />
+    
+
+  </head>
+  <body class="palette-primary-blue-grey palette-accent-light-blue">
+
+
+
+	
+	
+
+
+<div class="backdrop">
+	<div class="backdrop-paper"></div>
+</div>
+
+<input class="toggle" type="checkbox" id="toggle-drawer">
+<input class="toggle" type="checkbox" id="toggle-search">
+<label class="toggle-button overlay" for="toggle-drawer"></label>
+
+<header class="header">
+	<nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        kube-exec
+      </div>
+    </div>
+
+    
+
+    
+    <div class="button button-github" role="button" aria-label="GitHub">
+      <a href="https://github.com/engineerd" title="@engineerd on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
+    </div>
+    
+    
+        
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+</header>
+
+<main class="main">
+	<div class="drawer">
+		<nav aria-label="Navigation">
+  <a href="https://github.com/engineerd/kube-exec" class="project">
+    <div class="banner">
+      
+      <div class="name">
+        <strong>kube-exec </strong>
+        
+          <br>
+          engineerd/kube-exec
+        
+      </div>
+    </div>
+  </a>
+
+  <div class="scrollable">
+    <div class="wrapper">
+      
+        <ul class="repo">
+          <li class="repo-download">
+            <a href="https://github.com/engineerd/kube-exec/archive/master.zip" target="_blank" title="Download" data-action="download">
+              <i class="icon icon-download"></i> Download
+            </a>
+          </li>
+          <li class="repo-stars">
+            <a href="https://github.com/engineerd/kube-exec/stargazers" target="_blank" title="Stargazers" data-action="star">
+              <i class="icon icon-star"></i> Stars
+              <span class="count">&ndash;</span>
+            </a>
+          </li>
+        </ul>
+        <hr>
+      
+
+      <div class="toc">
+        
+        <ul>
+          
+
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Introduction" href="https://example.org/introduction/">
+	
+	Introduction
+</a>
+
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Examples" href="https://example.org/examples/">
+	
+	Examples
+</a>
+
+
+
+  
+</li>
+
+
+        </ul>
+        
+
+        
+        <hr>
+        <span class="section">The author</span>
+        
+        <ul>
+          
+
+          
+          <li>
+            <a href="https://github.com/engineerd" target="_blank" title="@engineerd on GitHub">
+              @engineerd on GitHub
+            </a>
+          </li>
+          
+
+          
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+
+	</div>
+
+	<article class="article">
+		<div class="wrapper">
+			
+				<h1>Introduction </h1>
+
+				
+
+<h2 id="what-is-kube-exec">What is <code>kube-exec</code>?</h2>
+
+<p><a href="https://circleci.com/gh/engineerd/kube-exec"><img src="https://circleci.com/gh/engineerd/kube-exec/tree/master.svg?style=shield&amp;circle-token=13a8324e6b860dc9158a67d0102920047b5c1144" alt="CircleCI" /></a>
+<a href="https://goreportcard.com/report/github.com/engineerd/kube-exec"><img src="https://goreportcard.com/badge/github.com/engineerd/kube-exec" alt="Go Report Card" /></a>
+<a href="https://godoc.org/github.com/engineerd/kube-exec"><img src="https://godoc.org/github.com/engineerd/kube-exec?status.svg" alt="Documentation" /></a></p>
+
+<p><code>kube-exec</code> is a library similar to <a href="https://golang.org/pkg/os/exec"><code>os/exec</code></a> that allows you to run commands in a Kubernetes pod, as if that command was executed locally.
+&gt; It is inspired from <a href="https://github.com/ahmetb/go-dexec"><code>go-dexec</code></a> by <a href="https://twitter.com/ahmetb">ahmetb</a>, which does the same thing, but for a Docker engine.</p>
+
+<p>The interface of the package is similar to <code>os/exec</code>, and essentially this:</p>
+
+<ul>
+<li>creates a new pod in Kubernetes based on a user-specified image</li>
+<li>waits for the pod to be in <a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/"><code>Running</code></a> state</li>
+<li>attaches to the pod and allows you to stream data to the pod through <code>stdin</code>, and from the pod back to the program through <code>stdout</code> and <code>stderr</code></li>
+</ul>
+
+<h2 id="how-to-use-it">How to use it</h2>
+
+<pre><code class="language-go">cfg := kube.Config{
+	Kubeconfig: os.Getenv(&quot;KUBECONFIG&quot;),
+	Image:      &quot;ubuntu&quot;,
+	Name:       &quot;kube-example&quot;,
+	Namespace:  &quot;default&quot;,
+}
+
+cmd := kube.Command(cfg, &quot;/bin/sh&quot;, &quot;-c&quot;, &quot;sleep 2; echo Running from Kubernetes pod;&quot;)
+cmd.Stdout = os.Stdout
+
+err := cmd.Run()
+if err != nil {
+	log.Fatalf(&quot;error: %v&quot;, err)
+}
+</code></pre>
+
+<p>Here&rsquo;s a list of full examples you can find in this repo:</p>
+
+<ul>
+<li><a href="https://example.org/examples/#the-simplest-example">simple hello example</a></li>
+<li><a href="https://example.org/examples/#passing-stdin-to-the-pod">pass <code>stdin</code> to the pod</a></li>
+<li><a href="https://example.org/examples/#passing-secrets-to-the-pod">pass Kubernetes secrets as environment variables</a></li>
+</ul>
+
+			
+
+			<aside class="copyright" role="note">
+				
+				&copy; 2019 Released under the MIT license &ndash;
+				
+				Documentation built with
+				<a href="https://www.gohugo.io" target="_blank">Hugo</a>
+				using the
+				<a href="http://github.com/digitalcraftsman/hugo-material-docs" target="_blank">Material</a> theme.
+			</aside>
+
+			<footer class="footer">
+				
+
+
+
+<nav class="pagination" aria-label="Footer">
+  <div class="previous">
+  </div>
+
+  
+  
+  <div class="next">
+      <a href="https://example.org/tags/" title="Tags">
+        <span class="direction">
+          Next
+        </span>
+        <div class="page">
+          <div class="stretch">
+            <div class="title">
+              Tags
+            </div>
+          </div>
+          <div class="button button-next" role="button" aria-label="Next">
+            <i class="icon icon-forward"></i>
+          </div>
+        </div>
+      </a>
+  </div>
+</nav>
+
+
+
+			</footer>
+		</div>
+	</article>
+
+	<div class="results" role="status" aria-live="polite">
+		<div class="scrollable">
+			<div class="wrapper">
+				<div class="meta"></div>
+				<div class="list"></div>
+			</div>
+		</div>
+	</div>
+</main>
+
+    <script>
+    
+      var base_url = 'https:\/\/example.org\/';
+      var repo_id  = 'engineerd\/kube-exec';
+    
+    </script>
+
+    <script src="https://example.org/javascripts/application.js"></script>
+    
+
+    <script>
+      /* Add headers to scrollspy */
+      var headers   = document.getElementsByTagName("h2");
+      var scrollspy = document.getElementById('scrollspy');
+
+      if(scrollspy) {
+        if(headers.length > 0) {
+          for(var i = 0; i < headers.length; i++) {
+            var li = document.createElement("li");
+            li.setAttribute("class", "anchor");
+
+            var a  = document.createElement("a");
+            a.setAttribute("href", "#" + headers[i].id);
+            a.setAttribute("title", headers[i].innerHTML);
+            a.innerHTML = headers[i].innerHTML;
+
+            li.appendChild(a)
+            scrollspy.appendChild(li);
+          }
+        } else {
+          scrollspy.parentElement.removeChild(scrollspy)
+        }
+
+
+        /* Add permanent link next to the headers */
+        var headers = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
+        for(var i = 0; i < headers.length; i++) {
+            var a = document.createElement("a");
+            a.setAttribute("class", "headerlink");
+            a.setAttribute("href", "#" + headers[i].id);
+            a.setAttribute("title", "Permanent link")
+            a.innerHTML = "#";
+            headers[i].appendChild(a);
+        }
+      }
+    </script>
+
+    
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/languages/go.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Examples - kube-exec</title>
+    <meta name="generator" content="Hugo 0.54.0" />
+
+    
+    <meta name="description" content="Lightweight Golang package for executing commands in remote Kubernetes pods">
+    
+    <link rel="canonical" href="https://example.org/examples/">
+    
+    <meta name="author" content="Engineerd">
+    
+
+    <meta property="og:url" content="https://example.org/examples/">
+    <meta property="og:title" content="kube-exec">
+    
+    <meta name="apple-mobile-web-app-title" content="kube-exec">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://example.org/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="https://example.org/images/favicon.ico">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('https://example.org/fonts/icon.eot');
+        src: url('https://example.org/fonts/icon.eot')
+               format('embedded-opentype'),
+             url('https://example.org/fonts/icon.woff')
+               format('woff'),
+             url('https://example.org/fonts/icon.ttf')
+               format('truetype'),
+             url('https://example.org/fonts/icon.svg')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="https://example.org/stylesheets/application.css">
+    <link rel="stylesheet" href="https://example.org/stylesheets/temporary.css">
+    <link rel="stylesheet" href="https://example.org/stylesheets/palettes.css">
+    <link rel="stylesheet" href="https://example.org/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="https://example.org/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class="palette-primary-blue-grey palette-accent-light-blue">
+
+
+
+	
+	
+
+
+<div class="backdrop">
+	<div class="backdrop-paper"></div>
+</div>
+
+<input class="toggle" type="checkbox" id="toggle-drawer">
+<input class="toggle" type="checkbox" id="toggle-search">
+<label class="toggle-button overlay" for="toggle-drawer"></label>
+
+<header class="header">
+	<nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        Examples
+      </div>
+    </div>
+
+    
+
+    
+    <div class="button button-github" role="button" aria-label="GitHub">
+      <a href="https://github.com/engineerd" title="@engineerd on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
+    </div>
+    
+    
+        
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+</header>
+
+<main class="main">
+	<div class="drawer">
+		<nav aria-label="Navigation">
+  <a href="https://github.com/engineerd/kube-exec" class="project">
+    <div class="banner">
+      
+      <div class="name">
+        <strong>kube-exec </strong>
+        
+          <br>
+          engineerd/kube-exec
+        
+      </div>
+    </div>
+  </a>
+
+  <div class="scrollable">
+    <div class="wrapper">
+      
+        <ul class="repo">
+          <li class="repo-download">
+            <a href="https://github.com/engineerd/kube-exec/archive/master.zip" target="_blank" title="Download" data-action="download">
+              <i class="icon icon-download"></i> Download
+            </a>
+          </li>
+          <li class="repo-stars">
+            <a href="https://github.com/engineerd/kube-exec/stargazers" target="_blank" title="Stargazers" data-action="star">
+              <i class="icon icon-star"></i> Stars
+              <span class="count">&ndash;</span>
+            </a>
+          </li>
+        </ul>
+        <hr>
+      
+
+      <div class="toc">
+        
+        <ul>
+          
+
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Introduction" href="https://example.org/introduction/">
+	
+	Introduction
+</a>
+
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a class="current" title="Examples" href="https://example.org/examples/">
+	
+	Examples
+</a>
+
+
+<ul id="scrollspy">
+</ul>
+
+
+  
+</li>
+
+
+        </ul>
+        
+
+        
+        <hr>
+        <span class="section">The author</span>
+        
+        <ul>
+          
+
+          
+          <li>
+            <a href="https://github.com/engineerd" target="_blank" title="@engineerd on GitHub">
+              @engineerd on GitHub
+            </a>
+          </li>
+          
+
+          
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+
+	</div>
+
+	<article class="article">
+		<div class="wrapper">
+			<h1>Examples </h1>
+			<div>Last updated: February 18, 2019 </div>
+			<div>Reading time: 2 minutes </div>
+			
+
+<h2 id="the-simplest-example">The simplest example</h2>
+
+<p>The following example creates a new pod based on the official Ubuntu image, then simply prints a message.</p>
+
+<blockquote>
+<p>Note: Because of a <a href="https://github.com/engineerd/kube-exec/issues/6">known temporary limitation</a>, if the execution time of the command started inside the pod is too small, the logs will not be visible when executing, but have to be gathered using <code>kubectl</code>. Because of this reason, in this example there is a <code>sleep</code> command as well. This does <strong>not</strong> affect functionality, the command can be executed without the additional sleep statement, and this will be improved in the future.</p>
+</blockquote>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;log&quot;
+	&quot;os&quot;
+
+	kube &quot;github.com/engineerd/kube-exec&quot;
+)
+
+func main() {
+
+	cfg := kube.Config{
+		Kubeconfig: os.Getenv(&quot;KUBECONFIG&quot;),
+		Image:      &quot;ubuntu&quot;,
+		Name:       &quot;kube-example&quot;,
+		Namespace:  &quot;default&quot;,
+	}
+
+	// also sleeping for a couple of seconds
+	// if the pod completes too fast, we don't have time to attach to it
+
+	cmd := kube.Command(cfg, &quot;/bin/sh&quot;, &quot;-c&quot;, &quot;sleep 2; echo Running from Kubernetes pod;&quot;)
+	cmd.Stdout = os.Stdout
+
+	err := cmd.Run()
+	if err != nil {
+		log.Fatalf(&quot;error: %v&quot;, err)
+	}
+
+}
+</code></pre>
+
+<h2 id="passing-stdin-to-the-pod">Passing <code>stdin</code> to the pod</h2>
+
+<p>Because this package follows the implementation of <code>os/exec</code>, you can also pass a pipe to the started pod and use it as standard input, as well as standard output, and standard error.</p>
+
+<pre><code class="language-go">func main() {
+
+	cfg := kube.Config{
+		Kubeconfig: os.Getenv(&quot;KUBECONFIG&quot;),
+		Image:      &quot;ubuntu&quot;,
+		Name:       &quot;kube-attach&quot;,
+		Namespace:  &quot;default&quot;,
+	}
+
+	cmd := kube.Command(cfg, &quot;/bin/sh&quot;, &quot;-c&quot;, &quot;while true; read test; do echo You said: $test; sleep .5; done&quot;)
+
+	w, err := cmd.StdinPipe()
+	if err != nil {
+		log.Fatalf(&quot;cannot get pipe to stdin: %v&quot;, err)
+	}
+
+	// write in cmd.Stdin
+	go func() {
+		defer w.Close()
+		_, err = io.Copy(w, os.Stdin)
+		if err != nil {
+			log.Fatalf(&quot;cannot copy from stdin: %v&quot;, err)
+		}
+	}()
+
+	cmd.Stdout = os.Stdout
+
+	err = cmd.Run()
+	if err != nil {
+		log.Fatalf(&quot;error: %v&quot;, err)
+	}
+
+}
+</code></pre>
+
+<h2 id="passing-secrets-to-the-pod">Passing secrets to the pod</h2>
+
+<p>If you need secret values to use inside your pod, Kubernetes secrets are available as environment variables.</p>
+
+<pre><code class="language-go">func main() {
+	cfg := kube.Config{
+		Kubeconfig: os.Getenv(&quot;KUBECONFIG&quot;),
+		Image:      &quot;ubuntu&quot;,
+		Name:       &quot;secret&quot;,
+		Namespace:  &quot;default&quot;,
+
+		Secrets: []kube.Secret{
+			{
+				EnvVarName: &quot;SUPERPRIVATESECRET&quot;,
+				SecretName: &quot;k8s-secret&quot;,
+				SecretKey:  &quot;password&quot;,
+			},
+		},
+	}
+
+	cmd := kube.Command(cfg, &quot;/bin/sh&quot;, &quot;-c&quot;, &quot;sleep 2; echo Your private secret: $SUPERPRIVATESECRET;&quot;)
+	cmd.Stdout = os.Stdout
+
+	err := cmd.Run()
+	if err != nil {
+		log.Fatalf(&quot;error: %v&quot;, err)
+	}
+
+}
+</code></pre>
+
+
+			<aside class="copyright" role="note">
+				
+				&copy; 2019 Released under the MIT license &ndash;
+				
+				Documentation built with
+				<a href="https://www.gohugo.io" target="_blank">Hugo</a>
+				using the
+				<a href="http://github.com/digitalcraftsman/hugo-material-docs" target="_blank">Material</a> theme.
+			</aside>
+
+			<footer class="footer">
+				
+
+<nav class="pagination" aria-label="Footer">
+  <div class="previous">
+  
+  </div>
+
+  <div class="next">
+  
+      <a href="https://example.org/introduction/" title="Introduction">
+        <span class="direction">
+          Next
+        </span>
+        <div class="page">
+          <div class="stretch">
+            <div class="title">
+              Introduction
+            </div>
+          </div>
+          <div class="button button-next" role="button" aria-label="Next">
+            <i class="icon icon-forward"></i>
+          </div>
+        </div>
+      </a>
+  
+  </div>
+</nav>
+
+
+
+
+
+			</footer>
+		</div>
+	</article>
+
+	<div class="results" role="status" aria-live="polite">
+		<div class="scrollable">
+			<div class="wrapper">
+				<div class="meta"></div>
+				<div class="list"></div>
+			</div>
+		</div>
+	</div>
+</main>
+
+    <script>
+    
+      var base_url = 'https:\/\/example.org\/';
+      var repo_id  = 'engineerd\/kube-exec';
+    
+    </script>
+
+    <script src="https://example.org/javascripts/application.js"></script>
+    
+
+    <script>
+      /* Add headers to scrollspy */
+      var headers   = document.getElementsByTagName("h2");
+      var scrollspy = document.getElementById('scrollspy');
+
+      if(scrollspy) {
+        if(headers.length > 0) {
+          for(var i = 0; i < headers.length; i++) {
+            var li = document.createElement("li");
+            li.setAttribute("class", "anchor");
+
+            var a  = document.createElement("a");
+            a.setAttribute("href", "#" + headers[i].id);
+            a.setAttribute("title", headers[i].innerHTML);
+            a.innerHTML = headers[i].innerHTML;
+
+            li.appendChild(a)
+            scrollspy.appendChild(li);
+          }
+        } else {
+          scrollspy.parentElement.removeChild(scrollspy)
+        }
+
+
+        /* Add permanent link next to the headers */
+        var headers = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
+        for(var i = 0; i < headers.length; i++) {
+            var a = document.createElement("a");
+            a.setAttribute("class", "headerlink");
+            a.setAttribute("href", "#" + headers[i].id);
+            a.setAttribute("title", "Permanent link")
+            a.innerHTML = "#";
+            headers[i].appendChild(a);
+        }
+      }
+    </script>
+
+    
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/languages/go.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
