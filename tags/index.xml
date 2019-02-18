@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on kube-exec</title>
-    <link>https://example.org/tags/</link>
+    <link>https://engineerd.github.io/kube-exec/tags/</link>
     <description>Recent content in Tags on kube-exec</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="https://example.org/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://engineerd.github.io/kube-exec/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
