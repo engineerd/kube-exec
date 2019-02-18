@@ -41,6 +41,10 @@ googleAnalytics = ""
 	url    = "examples/"
 	weight = 2
 
+[[menu.main]]
+	name   = "Contributing"
+	url    = "contributing/"
+	weight = 3
 
 [blackfriday]
 	smartypants	= true
