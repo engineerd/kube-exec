@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>kube-exec</title>
+    <link>https://example.org/</link>
+    <description>Recent content on kube-exec</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Feb 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Examples</title>
+      <link>https://example.org/examples/</link>
+      <pubDate>Mon, 18 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://example.org/examples/</guid>
+      <description>The simplest example The following example creates a new pod based on the official Ubuntu image, then simply prints a message.
+ Note: Because of a known temporary limitation, if the execution time of the command started inside the pod is too small, the logs will not be visible when executing, but have to be gathered using kubectl. Because of this reason, in this example there is a sleep command as well.</description>
+    </item>
+    
+    <item>
+      <title>Introduction</title>
+      <link>https://example.org/introduction/</link>
+      <pubDate>Mon, 18 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://example.org/introduction/</guid>
+      <description>What is kube-exec?   
+kube-exec is a library similar to os/exec that allows you to run commands in a Kubernetes pod, as if that command was executed locally. &amp;gt; It is inspired from go-dexec by ahmetb, which does the same thing, but for a Docker engine.
+The interface of the package is similar to os/exec, and essentially this:
+ creates a new pod in Kubernetes based on a user-specified image waits for the pod to be in Running state attaches to the pod and allows you to stream data to the pod through stdin, and from the pod back to the program through stdout and stderr  How to use it cfg := kube.</description>
+    </item>
+    
+  </channel>
+</rss>
