@@ -12,6 +12,17 @@
     
     
     <item>
+      <title>Contributing</title>
+      <link>https://engineerd.github.io/kube-exec/contributing/</link>
+      <pubDate>Mon, 18 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://engineerd.github.io/kube-exec/contributing/</guid>
+      <description>Contributing We are delighted you want to contribute to this project! Keep in mind that any contribution to this project MUST adhere to the Contributor Covenant Code of Conduct.
+Here&amp;rsquo;s a short check list to help you contribute to this project:
+ check the issue queue and PR queue to make sure you&amp;rsquo;re not duplicating any developer&amp;rsquo;s work. if there is an existing issue, please comment on it before starting to work on the implementation - if there isn&amp;rsquo;t one, please create it.</description>
+    </item>
+    
+    <item>
       <title>Examples</title>
       <link>https://engineerd.github.io/kube-exec/examples/</link>
       <pubDate>Mon, 18 Feb 2019 00:00:00 +0000</pubDate>

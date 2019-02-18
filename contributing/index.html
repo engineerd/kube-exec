@@ -9,18 +9,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
-    <title>kube-exec</title>
+    <title>Contributing - kube-exec</title>
     <meta name="generator" content="Hugo 0.54.0" />
 
     
     <meta name="description" content="Lightweight Golang package for executing commands in remote Kubernetes pods">
     
-    <link rel="canonical" href="https://engineerd.github.io/kube-exec/">
+    <link rel="canonical" href="https://engineerd.github.io/kube-exec/contributing/">
     
     <meta name="author" content="Engineerd">
     
 
-    <meta property="og:url" content="https://engineerd.github.io/kube-exec/">
+    <meta property="og:url" content="https://engineerd.github.io/kube-exec/contributing/">
     <meta property="og:title" content="kube-exec">
     
     <meta name="apple-mobile-web-app-title" content="kube-exec">
@@ -69,9 +69,6 @@
     <script src="https://engineerd.github.io/kube-exec/javascripts/modernizr.js"></script>
 
     
-    <link href="https://engineerd.github.io/kube-exec/index.xml" rel="alternate" type="application/rss+xml" title="kube-exec" />
-    <link href="https://engineerd.github.io/kube-exec/index.xml" rel="feed" type="application/rss+xml" title="kube-exec" />
-    
 
   </head>
   <body class="palette-primary-blue-grey palette-accent-light-blue">
@@ -100,7 +97,7 @@
     </div>
     <div class="stretch">
       <div class="title">
-        kube-exec
+        Contributing
       </div>
     </div>
 
@@ -215,11 +212,14 @@
 
 
 
-<a  title="Contributing" href="https://engineerd.github.io/kube-exec/contributing/">
+<a class="current" title="Contributing" href="https://engineerd.github.io/kube-exec/contributing/">
 	
 	Contributing
 </a>
 
+
+<ul id="scrollspy">
+</ul>
 
 
   
@@ -256,55 +256,50 @@
 
 	<article class="article">
 		<div class="wrapper">
+			<h1>Contributing </h1>
+			<div>Last updated: February 18, 2019 </div>
+			<div>Reading time: 1 minutes </div>
 			
-				<h1>Introduction </h1>
 
-				
+<h2 id="contributing">Contributing</h2>
 
-<h2 id="what-is-kube-exec">What is <code>kube-exec</code>?</h2>
+<p>We are delighted you want to contribute to this project! Keep in mind that any contribution to this project <strong>MUST</strong> adhere to the <a href="https://www.contributor-covenant.org/">Contributor Covenant Code of Conduct</a>.</p>
 
-<p><a href="https://circleci.com/gh/engineerd/kube-exec"><img src="https://circleci.com/gh/engineerd/kube-exec/tree/master.svg?style=shield&amp;circle-token=13a8324e6b860dc9158a67d0102920047b5c1144" alt="CircleCI" /></a>
-<a href="https://goreportcard.com/report/github.com/engineerd/kube-exec"><img src="https://goreportcard.com/badge/github.com/engineerd/kube-exec" alt="Go Report Card" /></a>
-<a href="https://godoc.org/github.com/engineerd/kube-exec"><img src="https://godoc.org/github.com/engineerd/kube-exec?status.svg" alt="Documentation" /></a></p>
-
-<p><code>kube-exec</code> is a library similar to <a href="https://golang.org/pkg/os/exec"><code>os/exec</code></a> that allows you to run commands in a Kubernetes pod, as if that command was executed locally.
-&gt; It is inspired from <a href="https://github.com/ahmetb/go-dexec"><code>go-dexec</code></a> by <a href="https://twitter.com/ahmetb">ahmetb</a>, which does the same thing, but for a Docker engine.</p>
-
-<p>The interface of the package is similar to <code>os/exec</code>, and essentially this:</p>
+<p>Here&rsquo;s a short check list to help you contribute to this project:</p>
 
 <ul>
-<li>creates a new pod in Kubernetes based on a user-specified image</li>
-<li>waits for the pod to be in <a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/"><code>Running</code></a> state</li>
-<li>attaches to the pod and allows you to stream data to the pod through <code>stdin</code>, and from the pod back to the program through <code>stdout</code> and <code>stderr</code></li>
+<li>check the <a href="https://github.com/engineerd/kube-exec/issues">issue queue</a> and <a href="https://github.com/engineerd/kube-exec/pulls">PR queue</a> to make sure you&rsquo;re not duplicating any developer&rsquo;s work.</li>
+<li>if there is an existing issue, please comment on it before starting to work on the implementation - if there isn&rsquo;t one, please create it.</li>
+<li>fork the project.</li>
+<li>follow the instructions below to make sure you have all required prerequisites to build the project.</li>
+<li>create a pull request with your changes.</li>
 </ul>
 
-<h2 id="how-to-use-it">How to use it</h2>
+<p>Any contribution is extremely appreciated - documentation, bug fixes or features. Thank you!</p>
 
-<pre><code class="language-go">cfg := kube.Config{
-	Kubeconfig: os.Getenv(&quot;KUBECONFIG&quot;),
-	Image:      &quot;ubuntu&quot;,
-	Name:       &quot;kube-example&quot;,
-	Namespace:  &quot;default&quot;,
-}
-
-cmd := kube.Command(cfg, &quot;/bin/sh&quot;, &quot;-c&quot;, &quot;sleep 2; echo Running from Kubernetes pod;&quot;)
-cmd.Stdout = os.Stdout
-
-err := cmd.Run()
-if err != nil {
-	log.Fatalf(&quot;error: %v&quot;, err)
-}
-</code></pre>
-
-<p>Here&rsquo;s a list of full examples you can find in this repo:</p>
+<h2 id="prerequisites">Prerequisites</h2>
 
 <ul>
-<li><a href="https://engineerd.github.io/kube-exec/examples/#the-simplest-example">simple hello example</a></li>
-<li><a href="https://engineerd.github.io/kube-exec/examples/#passing-stdin-to-the-pod">pass <code>stdin</code> to the pod</a></li>
-<li><a href="https://engineerd.github.io/kube-exec/examples/#passing-secrets-to-the-pod">pass Kubernetes secrets as environment variables</a></li>
+<li><a href="https://golang.org/doc/install">the Go toolchain</a></li>
+<li><a href="https://github.com/golang/dep"><code>dep</code></a></li>
+<li><code>make</code> (optional)</li>
 </ul>
 
-			
+<h2 id="building-from-source">Building from source</h2>
+
+<ul>
+<li><code>dep ensure</code></li>
+<li><code>make build</code> to build the library</li>
+<li><code>make examples</code> to build all examples in <code>examples/</code></li>
+<li>if running locally, you should provide an environment variable for the Kubernetes configuration file:
+
+<ul>
+<li>on Linux (including Windows Subsystem for Linux) and macOS: <code>export KUBECONFIG=&lt;path-to-config&gt;</code></li>
+<li>on Windows: <code>$env:KUBECONFIG=&quot;&lt;path-to-config&gt;&quot;</code></li>
+</ul></li>
+<li>alternatively, you can individually <code>go run</code> the desired example locally, provided you pass a valid Kubernetes config file</li>
+</ul>
+
 
 			<aside class="copyright" role="note">
 				
@@ -319,23 +314,21 @@ if err != nil {
 			<footer class="footer">
 				
 
-
-
 <nav class="pagination" aria-label="Footer">
   <div class="previous">
+  
   </div>
 
-  
-  
   <div class="next">
-      <a href="https://engineerd.github.io/kube-exec/tags/" title="Tags">
+  
+      <a href="https://engineerd.github.io/kube-exec/examples/" title="Examples">
         <span class="direction">
           Next
         </span>
         <div class="page">
           <div class="stretch">
             <div class="title">
-              Tags
+              Examples
             </div>
           </div>
           <div class="button button-next" role="button" aria-label="Next">
@@ -343,8 +336,11 @@ if err != nil {
           </div>
         </div>
       </a>
+  
   </div>
 </nav>
+
+
 
 
 
