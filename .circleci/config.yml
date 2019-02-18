@@ -5,7 +5,7 @@ jobs:
       # specify the version
       - image: circleci/golang:1.10-stretch
 
-    working_directory: /go/src/github.com/radu-matei/kube-exec
+    working_directory: /go/src/github.com/engineerd/kube-exec
     steps:
       - checkout
 

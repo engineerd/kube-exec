@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	kube "github.com/radu-matei/kube-exec"
+	kube "github.com/engineerd/kube-exec"
 )
 
 func main() {

@@ -1,5 +1,9 @@
-kube-exec
-=========
+---
+date: 2019-02-18
+title: Introduction
+---
+
+## What is `kube-exec`?
 
 [![CircleCI](https://circleci.com/gh/engineerd/kube-exec/tree/master.svg?style=shield&circle-token=13a8324e6b860dc9158a67d0102920047b5c1144)](https://circleci.com/gh/engineerd/kube-exec)
 [![Go Report Card](https://goreportcard.com/badge/github.com/engineerd/kube-exec)](https://goreportcard.com/report/github.com/engineerd/kube-exec)
@@ -15,8 +19,8 @@ The interface of the package is similar to `os/exec`, and essentially this:
 - attaches to the pod and allows you to stream data to the pod through `stdin`, and from the pod back to the program through `stdout` and `stderr`
 
 
-How to use it
--------------
+## How to use it
+
 
 ```go
 cfg := kube.Config{
