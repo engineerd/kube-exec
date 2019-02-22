@@ -11,7 +11,7 @@ import (
 func main() {
 
 	cfg := kube.Config{
-		Kubeconfig: os.Getenv("KUBECONFIG"),
+		KubeConfig: os.Getenv("KUBECONFIG"),
 		Image:      "ubuntu",
 		Name:       "kube-attach",
 		Namespace:  "default",
