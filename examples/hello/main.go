@@ -10,7 +10,7 @@ import (
 func main() {
 
 	cfg := kube.Config{
-		Kubeconfig: os.Getenv("KUBECONFIG"),
+		KubeConfig: os.Getenv("KUBECONFIG"),
 		Image:      "ubuntu",
 		Name:       "kube-example",
 		Namespace:  "default",
@@ -19,7 +19,7 @@ func main() {
 	// also sleeping for a couple of seconds
 	// if the pod completes too fast, we don't have time to attach to it
 
-	cmd := kube.Command(cfg, "/bin/sh", "-c", "sleep 2; echo Running from Kubernetes pod;")
+	cmd := kube.Command(cfg, "/bin/sh", "-c", "echo Running from Kubernetes pod;")
 	cmd.Stdout = os.Stdout
 
 	err := cmd.Run()
